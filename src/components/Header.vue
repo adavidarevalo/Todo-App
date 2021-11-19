@@ -4,7 +4,9 @@
         <section>
             <div class="Header-Container">
                 <div>
-                    <h2>TODO</h2>
+                    <h2
+                    :style="!$store.state.StateBackground && 'color: white'"
+                    >TODO</h2>
                 </div>
                 <button @click='changeBackground()'>
                     <img
@@ -17,13 +19,18 @@
                     alt="Sun"/>
                 </button>
             </div>
-            <div
-            class="Header-Input "
+            <form
+            class="Header-Input"
+            id='FormContact'
             :style="!$store.state.StateBackground && 'background: hsl(235, 24%, 19%)'">
                 <div class="Cercle"></div>
-                <input type='text' placeholder="Create a new todo..."
+                <input
+                type='text'
+                placeholder="Create a new todo..."
+                @keypress.enter="CreateElement"
+                v-model="SearchInput"
                 :style="!$store.state.StateBackground && 'color: white'"/>
-            </div>
+            </form>
         </section>
     </header>
 </template>
@@ -42,6 +49,14 @@ export default {
     changeBackground() {
       this.StateBackground = !this.$store.commit('ChangeBCK');
     },
+    CreateElement() {
+      const Data = {
+        description: this.SearchInput,
+        realized: false,
+      };
+      this.$store.commit('CreateElement', Data);
+      document.getElementById('FormContact').reset();
+    },
   },
 };
 </script>
@@ -55,6 +70,12 @@ header{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all 1s ease;
+}
+h2{
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 1.7rem;
     transition: all 1s ease;
 }
 .Header-Container_Ligth{
@@ -71,6 +92,7 @@ section{
 button{
     background: none;
     border: none;
+    cursor: pointer;
 }
 .Header-Container{
     display: flex;

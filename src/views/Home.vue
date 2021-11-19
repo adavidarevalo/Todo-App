@@ -25,6 +25,8 @@ export default {
 div{
   transition: all 1s ease;
   padding-bottom: 10px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 .home{
   background: #FAFAFA;

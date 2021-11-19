@@ -4,7 +4,7 @@
             <div
             class="Container-Element"
             v-for="(item, index) in $store.state.Element" :key='index'>
-                <ResultElement :item='item'/>
+                <ResultElement :item='item' :index='index'/>
             </div>
             <FooterNav/>
         </div>

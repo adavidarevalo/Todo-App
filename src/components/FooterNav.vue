@@ -1,11 +1,23 @@
 <template>
-    <footer>
-        <p><span>4</span> Items left</p>
+    <footer :class="!$store.state.StateBackground && 'Dark'">
+        <p><span>{{$store.state.Element.length}}</span> Items left</p>
         <div>
-            <button class="Active">All</button>
-            <button>Active</button>
-            <button>Complited</button>
-            <button>Clear Completed</button>
+            <button
+            :class="button === 0 && 'Active'"
+            @click='ChangedButton(0)'
+            >All</button>
+            <button
+            :class="button === 1 && 'Active'"
+            @click='ChangedButton(1)'
+            >Active</button>
+            <button
+            :class="button === 2 && 'Active'"
+            @click='ChangedButton(2)'
+            >Complited</button>
+            <button
+            :class="button === 3 && 'Active'"
+            @click='ChangedButton(3)'
+            >Clear Completed</button>
         </div>
     </footer>
 </template>
@@ -14,11 +26,35 @@
 
 export default {
   name: 'FooterNav',
+  data() {
+    return {
+      button: 0,
+    };
+  },
+  methods: {
+    ChangedButton(e) {
+      this.button = e;
+      this.$store.commit('ActionElements', e);
+    },
+  },
 };
 
 </script>
 
 <style scoped>
+.Dark{
+    background: rgb(36, 39, 59);
+}
+.Dark > p {
+    color: white;
+}
+.Dark > div > button{
+    color: white;
+}
+footer{
+    background: white;
+    transition: all 1s ease;
+}
 span{
     font-weight: 600;
 }
@@ -30,9 +66,10 @@ div{
 button{
     border: none;
     background: none;
+    cursor: pointer;
 }
 .Active{
-    color: #3a7bfd;
+    color: #3a7bfd !important;
 }
 @media (min-width: 600px){
     div{
